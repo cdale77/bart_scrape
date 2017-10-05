@@ -12,6 +12,9 @@ defmodule BartScrape.Scraper do
 
   def handle_info(:work, state) do
     # scrape here
+    # 1) fetch data
+    # 2) parse it and look for delays
+    # 3) save it if anything found
     schedule_work()
     {:noreply, state}
   end
