@@ -2,7 +2,7 @@ defmodule BartScrape.FetcherTest do
   use ExUnit.Case
 
   test "should return the BART API data" do
-    test_data = ~s"""
+    test_data = """
       {
         "?xml": {
           "@version": "1.0",
@@ -29,9 +29,9 @@ defmodule BartScrape.FetcherTest do
           "message": ""
         }
       }
-    """
+    """ |> String.replace(~r/[\n,\s+]/, "")
 
     {:ok, fetched } = BartScrape.Fetcher.fetch_data();
-    assert test_data === fetched
+    assert test_data === fetched |> String.replace(~r/[\n,\s+]/, "")
   end
 end
