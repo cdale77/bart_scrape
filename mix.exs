@@ -40,7 +40,8 @@ defmodule BartScrape.Mixfile do
       {:gettext, "~> 0.11"},
       {:cowboy, "~> 1.0"},
       {:poison, "~> 3.1"},
-      {:httpoison, "~> 0.13"}
+      {:httpoison, "~> 0.13"},
+      {:mock, "~> 0.2.0", only: :test}
     ]
   end
 
