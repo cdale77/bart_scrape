@@ -17,6 +17,5 @@ defmodule BartScrape.DelayRecord do
   def changeset(%DelayRecord{} = delay_record, attrs) do
     delay_record
     |> cast(attrs, [:bart_id, :station, :delay_type, :posted])
-    |> validate_required([:bart_id, :station, :delay_type, :posted])
   end
 end

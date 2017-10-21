@@ -1,6 +1,6 @@
-defmodule BartScrape.Recorder do
-  use ExUnit.Case
-  alias BartScrape.Recorder
+defmodule BartScrape.RecorderTest do
+  use BartScrape.ModelCase
+  alias BartScrape.{Repo, Recorder, DelayRecord}
 
   @delays [
         %{
@@ -28,13 +28,17 @@ defmodule BartScrape.Recorder do
 
   describe "with no delays" do
     test "should not persist any records in the db" do
-
+      #Recorder.record_delays(@no_delays)
+      #count = Repo.one(from d in DelayRecord, select: count(d.id))
+      #assert 0 == count
     end
   end
 
   describe "with delays" do
     test "should persist records in the db" do
-
+      Recorder.record_delays(@delays)
+      count = Repo.one(from d in DelayRecord, select: count(d.id))
+      assert 1 == count
     end
   end
 end
