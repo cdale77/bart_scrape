@@ -92,7 +92,9 @@ defmodule BartScrape.ParserTest do
           "sms_text" => %{
             "#cdata-section" => "BART recovering: 10 min delay on SF line."
           },
-          "station" => "BART", "type" => "DELAY"}]
+          "station" => "BART", "type" => "DELAY"
+        }
+      ]
 
       assert expected == returned
     end
