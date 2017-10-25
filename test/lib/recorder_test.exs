@@ -1,7 +1,6 @@
 defmodule BartScrape.RecorderTest do
   use BartScrape.ModelCase
   alias BartScrape.{Repo, Recorder, DelayRecord}
-
   @delays [
         %{
           "@id"              => "159007",
@@ -39,6 +38,17 @@ defmodule BartScrape.RecorderTest do
       Recorder.record_delays(@delays)
       count = Repo.one(from d in DelayRecord, select: count(d.id))
       assert 1 == count
+    end
+
+    test "should save the proper fields" do
+      Recorder.record_delays(@delays)
+      record = Repo.one(from d in DelayRecord, limit: 1)
+      assert record.bart_id == 159007
+      assert record.delay_type == "DELAY"
+      assert record.station == "BART"
+      expected = NaiveDateTime.to_iso8601(record.posted)
+      assert expected == "2017-10-18T17:36:00.000000"
+
     end
   end
 end

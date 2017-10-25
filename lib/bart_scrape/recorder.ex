@@ -2,6 +2,7 @@ defmodule BartScrape.Recorder do
   use Timex
   require IEx
   alias BartScrape.{Repo, DelayRecord}
+  @format_string "%a %b %d %Y %I:%M %p %Z"
 
   def record_delays(delay_list) do
     for delay <- delay_list do
@@ -10,14 +11,21 @@ defmodule BartScrape.Recorder do
           attributes = %{
             bart_id: delay["@id"],
             delay_type: delay["type"],
-            station: delay["station"]
+            station: delay["station"],
+            posted: parse_time(delay["posted"])
           }
-          time = Timex.parse(delay["posted"], "%a %b %d %Y %I:%M %p %Z", :strftime)
+
           changeset = DelayRecord.changeset(%DelayRecord{}, attributes)
-          IEx.pry
           Repo.insert(changeset)
-        %{} ->
+        %{} -> nil
       end
+    end
+  end
+
+  defp parse_time(time_string) do
+    case Timex.parse(time_string, @format_string, :strftime) do
+      {:ok, time} -> time
+      _ -> nil
     end
   end
 end
