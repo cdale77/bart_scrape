@@ -28,9 +28,9 @@ defmodule BartScrape.RecorderTest do
 
   describe "with no delays" do
     test "should not persist any records in the db" do
-      #Recorder.record_delays(@no_delays)
-      #count = Repo.one(from d in DelayRecord, select: count(d.id))
-      #assert 0 == count
+      Recorder.record_delays(@no_delays)
+      count = Repo.one(from d in DelayRecord, select: count(d.id))
+      assert 0 == count
     end
   end
 
