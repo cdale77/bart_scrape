@@ -11,10 +11,9 @@ defmodule BartScrape.Scraper do
     {:ok, state}
   end
 
-  def handle_info(:work, state) do
+  def handle_info(:work) do
     schedule_work()
     Fetcher.fetch_data |> Parser.parse_data |> Recorder.record_delays
-    {:noreply, state}
   end
 
   defp schedule_work() do
