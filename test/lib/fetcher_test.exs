@@ -33,9 +33,10 @@ defmodule BartScrape.FetcherTest do
   """
 
   test "should return the BART API data" do
-    with_mock Fetcher, [fetch_data: fn() -> {:ok, @test_data} end ] do
+    mocked_resp = %{body: @test_data}
+    with_mock HTTPoison, [get: fn(_) -> {:ok, mocked_resp} end ] do
 
-      {:ok, fetched } = Fetcher.fetch_data();
+      fetched = Fetcher.fetch_data();
       assert @test_data === fetched
     end
   end
