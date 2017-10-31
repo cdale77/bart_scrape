@@ -7,17 +7,18 @@ defmodule BartScrape.Scraper do
   end
 
   def init(state) do
-    #schedule_work()
+    schedule_work()
     {:ok, state}
   end
 
   def handle_info(:work, state) do
-    #schedule_work()
+    schedule_work()
     Fetcher.fetch_data |> Parser.parse_data |> Recorder.record_delays
     {:noreply, state}
   end
 
-  #defp schedule_work() do
-  #   Process.send_after(self(), :work, 0.25 * 60 * 60 * 1000) # 0.25 hrs
-  #end
+  defp schedule_work() do
+    interval = 15 * 60 * 1000 # 15 min
+    Process.send_after(self(), :work, interval)
+  end
 end
