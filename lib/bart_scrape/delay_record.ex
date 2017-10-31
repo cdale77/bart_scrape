@@ -3,7 +3,6 @@ defmodule BartScrape.DelayRecord do
   import Ecto.Changeset
   alias BartScrape.DelayRecord
 
-
   schema "delay_records" do
     field :bart_id, :integer
     field :delay_type, :string
