@@ -1,5 +1,6 @@
 defmodule BartScrape.Scraper do
   use GenServer
+  require Logger
   alias BartScrape.{Fetcher, Parser, Recorder}
 
   def start_link do
@@ -12,6 +13,7 @@ defmodule BartScrape.Scraper do
   end
 
   def handle_info(:work, state) do
+    Logger.info "Looking for delays"
     schedule_work()
     Fetcher.fetch_data |> Parser.parse_data |> Recorder.record_delays
     {:noreply, state}
