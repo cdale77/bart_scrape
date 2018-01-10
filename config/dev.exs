@@ -38,6 +38,7 @@ config :phoenix, :stacktrace_depth, 20
 config :bart_scrape, BartScrape.Repo,
   adapter: Ecto.Adapters.Postgres,
   username: "postgres",
+  password: "postgres",
   database: "bart_scrape_dev",
   hostname: "localhost",
   pool_size: 10
