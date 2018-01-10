@@ -9,6 +9,12 @@ jobs:
           POSTGRES_USER: postgres
     steps:
       - checkout
+      - type: cache-restore
+        key: deps-{{ checksum "mix.lock" }}
       - run: mix deps.get
+      - type: cache-save
+        key: deps-{{ checksum "mix.lock" }}
+        paths:
+          - deps
       - run: mix ecto.create
       - run: mix test
