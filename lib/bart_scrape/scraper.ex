@@ -8,6 +8,7 @@ defmodule BartScrape.Scraper do
   end
 
   def init(state) do
+    Logger.info "Starting Scraper"
     schedule_work()
     {:ok, state}
   end
@@ -20,7 +21,7 @@ defmodule BartScrape.Scraper do
   end
 
   defp schedule_work() do
-    interval = 15 * 60 * 1000 # 15 min
+    interval = 1 * 60 * 1000 # 15 min
     Process.send_after(self(), :work, interval)
   end
 end
