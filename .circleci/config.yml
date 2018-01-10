@@ -3,7 +3,7 @@ jobs:
   build:
     working_directory: ~/bart_scrape
     docker:
-      - image: circleci/elixir:1.5
+      - image: cdale77/docker-elixir-base:latest
       - image: postgres:9.6
         environment:
           POSTGRES_USER: postgres
