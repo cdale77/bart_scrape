@@ -12,9 +12,11 @@ jobs:
       - type: cache-restore
         key: deps-{{ checksum "mix.lock" }}
       - run: mix deps.get
+      - run: mix compile
       - type: cache-save
         key: deps-{{ checksum "mix.lock" }}
         paths:
           - deps
+          - _build
       - run: mix ecto.create
       - run: mix test
