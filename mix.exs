@@ -5,7 +5,7 @@ defmodule BartScrape.Mixfile do
     [
       app: :bart_scrape,
       version: "0.0.1",
-      elixir: "~> 1.4",
+      elixir: "~> 1.5",
       elixirc_paths: elixirc_paths(Mix.env),
       compilers: [:phoenix, :gettext] ++ Mix.compilers,
       start_permanent: Mix.env == :prod,
@@ -33,15 +33,16 @@ defmodule BartScrape.Mixfile do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
-      {:phoenix, "~> 1.3.0-rc"},
+      {:phoenix, "~> 1.3.0"},
       {:phoenix_pubsub, "~> 1.0"},
       {:phoenix_ecto, "~> 3.2"},
-      {:postgrex, ">= 0.0.0"},
-      {:gettext, "~> 0.11"},
+      {:postgrex, ">= 0.13.0"},
+      {:gettext, "~> 0.13"},
       {:cowboy, "~> 1.0"},
       {:poison, "~> 3.1"},
       {:httpoison, "~> 0.13"},
-      {:mock, "~> 0.2.0", only: :test},
+      {:mock, "~> 0.3.0", only: :test},
+      {:tzdata, "~> 0.1.8", override: true},
       {:timex, "~> 3.1"}
     ]
   end
