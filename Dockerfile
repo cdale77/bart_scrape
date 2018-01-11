@@ -1,4 +1,4 @@
-FROM cdale77/docker-elixir-base:laest
+FROM cdale77/docker-elixir-base:latest
 
 # Set the port and env
 ENV PORT=4001
@@ -14,6 +14,6 @@ RUN mix compile
 RUN mix release
 
 # Run the server
-CMD ["bin/drs_mock", "foreground"]
+CMD ["bin/bart_scrape", "foreground"]
 
-EXPOSE 4001
+#EXPOSE 4001

@@ -20,3 +20,24 @@ jobs:
           - _build
       - run: mix ecto.create
       - run: mix test
+
+  deploy:
+    docker:
+      - image: cdale77/docker-elixir-base:latest
+    steps:
+      - checkout
+      - setup_remote_docker:
+          docker_layer_cacheing: true
+      - run: ./deploy/production.sh
+
+workflows:
+  version: 2
+  build_test_deploy:
+    jobs:
+      - build
+      - deploy:
+          requires:
+            - build
+          filters:
+            branches:
+              only: master

@@ -43,7 +43,8 @@ defmodule BartScrape.Mixfile do
       {:httpoison, "~> 0.13"},
       {:mock, "~> 0.3.0", only: :test},
       {:tzdata, "~> 0.1.8", override: true},
-      {:timex, "~> 3.1"}
+      {:timex, "~> 3.1"},
+      {:distillery, "~> 1.5", runtime: false}
     ]
   end
 
