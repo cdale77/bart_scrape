@@ -11,9 +11,10 @@ defmodule BartScrape do
       # Start the Ecto repository
       supervisor(BartScrape.Repo, []),
       # Start the endpoint when the application starts
-      supervisor(BartScrape.Endpoint, []),
+      # supervisor(BartScrape.Endpoint, []),
       # Start your own worker by calling: BartScrape.Worker.start_link(arg1, arg2, arg3)
-      # worker(BartScrape.Worker, [arg1, arg2, arg3]),
+      # worker(BartScrape.Worker, [arg1, arg2, arg3])
+      worker(BartScrape.Scraper, [])
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html

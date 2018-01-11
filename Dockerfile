@@ -1,29 +1,19 @@
-FROM elixir:1.5.2
+FROM cdale77/docker-elixir-base:latest
 
-RUN mix local.hex --force
-RUN mix archive.install https://github.com/phoenixframework/archives/raw/master/phoenix_new.ez --force
-
-# install node
-RUN curl -sL https://deb.nodesource.com/setup_6.x -o nodesource_setup.sh
-RUN bash nodesource_setup.sh
-RUN apt-get install nodejs
-
-# create app folder
-RUN mkdir /app
-COPY . /app
-WORKDIR /app
-
-# setting the port and the environment (prod = PRODUCTION!)
+# Set the port and env
+ENV PORT=4001
 ENV MIX_ENV=prod
-ENV PORT=4000
 
-# install dependencies (production only)
-RUN mix local.rebar --force
-RUN mix deps.get --only prod
+# Set up app directory
+RUN mkdir /var/app
+WORKDIR /var/app
+
+# Copy the source and compile
+COPY . .
 RUN mix compile
+RUN mix release
 
-# create the digests
-#RUN mix phoenix.digest
+# Run the server
+CMD ["bin/bart_scrape", "foreground"]
 
-# run phoenix in production on PORT 4000
-CMD mix phoenix.server
+#EXPOSE 4001
