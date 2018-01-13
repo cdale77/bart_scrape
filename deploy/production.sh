@@ -18,6 +18,7 @@ echo "Pushing the container"
 docker push $ecr_repo:latest
 
 # Set the compose tasks
+AWS_REGION=us-east-1 \
 ecs-cli compose --file deploy/ecs-compose.yml \
                 --project-name bart-scrape \
                 --cluster bart-scrape \
