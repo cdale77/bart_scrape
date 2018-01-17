@@ -12,3 +12,7 @@ services:
         awslogs-stream-prefix: "bart-scrape"
     environment:
       MIX_ENV: "prod"
+  postgres:
+    image: "postgres"
+    volumes:
+      - "postgres:/var/lib/postgresql/data"
