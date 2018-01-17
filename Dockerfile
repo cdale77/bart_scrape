@@ -15,6 +15,6 @@ RUN mix compile
 RUN mix release
 
 # Run the server
-CMD ["bin/bart_scrape", "foreground"]
+CMD ["_build/prod/rel/bart_scrape/bin/bart_scrape", "foreground"]
 
 #EXPOSE 4001
