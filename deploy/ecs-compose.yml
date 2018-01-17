@@ -3,7 +3,7 @@ services:
   bart_scrape:
     image: "431853516066.dkr.ecr.us-east-1.amazonaws.com/bart-scrape:latest"
     cpu_shares: 200
-    mem_limit: 524288000
+    mem_limit: 256288000
     logging:
       driver: "awslogs"
       options:
@@ -14,5 +14,6 @@ services:
       MIX_ENV: "prod"
   postgres:
     image: "postgres"
+    mem_limit: 524288000
     volumes:
       - "postgres:/var/lib/postgresql/data"

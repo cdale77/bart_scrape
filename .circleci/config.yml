@@ -9,6 +9,12 @@ jobs:
           POSTGRES_USER: postgres
     steps:
       - checkout
+      - run:
+          name: install dockerize
+          command: wget https://github.com/jwilder/dockerize/releases/download/$DOCKERIZE_VERSION/dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz && tar -C /usr/local/bin -xzvf dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz && rm dockerize-linux-amd64-$DOCKERIZE_VERSION.tar.gz
+          environment:
+            DOCKERIZE_VERSION: v0.3.0
+
       - type: cache-restore
         key: deps-{{ checksum "mix.lock" }}
       - run: mix deps.get
@@ -18,6 +24,9 @@ jobs:
         paths:
           - deps
           - _build
+      - run:
+          name: Wait for db
+          command: dockerize -wait tcp://localhost:3306 -timeout 1m
       - run: mix ecto.create
       - run: mix test
 
