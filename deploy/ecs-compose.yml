@@ -1,7 +1,7 @@
 version: "2"
 services:
   bart_scrape:
-    image: "431853516066.dkr.ecr.us-east-1.amazonaws.com/bart_scrape:latest"
+    image: "431853516066.dkr.ecr.us-east-1.amazonaws.com/bart-scrape:latest"
     cpu_shares: 200
     mem_limit: 524288000
     logging:
