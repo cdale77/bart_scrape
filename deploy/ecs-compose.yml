@@ -1,5 +1,16 @@
 version: "2"
 services:
+  postgres:
+    image: "postgres"
+    mem_limit: 524288000
+    volumes:
+      - "postgres:/var/lib/postgresql/data"
+    ports:
+      - 5432
+    environment:
+      POSTGRES_PASSWORD: "postgres"
+      POSTGRES_USER: "postgres"
+      POSTGRES_DB: "bart_scrape_prod"
   bart_scrape:
     image: "431853516066.dkr.ecr.us-east-1.amazonaws.com/bart-scrape:latest"
     cpu_shares: 200
@@ -12,12 +23,5 @@ services:
         awslogs-stream-prefix: "bart-scrape"
     environment:
       MIX_ENV: "prod"
-  postgres:
-    image: "postgres"
-    mem_limit: 524288000
-    volumes:
-      - "postgres:/var/lib/postgresql/data"
-    environment:
-      POSTGRES_PASSWORD: "postgres"
-      POSTGRES_USER: "postgres"
-      POSTGRES_DB: "bart_scrape_prod"
+    links:
+      - postgres
