@@ -21,7 +21,7 @@ defmodule BartScrape.Scraper do
   end
 
   defp schedule_work() do
-    interval = 1 * 60 * 1000 # 15 min
+    interval = 15 * 60 * 1000 # 15 min
     Process.send_after(self(), :work, interval)
   end
 end
