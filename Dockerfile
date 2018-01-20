@@ -1,7 +1,5 @@
 FROM cdale77/docker-elixir-base:latest
 
-RUN apt-get update && apt-get install -y postgresql postgresql-contrib
-
 # Set the port and env
 ENV PORT=4001
 ENV MIX_ENV=prod
