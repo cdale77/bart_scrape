@@ -14,8 +14,6 @@ config :bart_scrape, BartScrape.Endpoint,
 # Configure your database
 config :bart_scrape, BartScrape.Repo,
   adapter: Ecto.Adapters.Postgres,
-  #username: System.get_env("DATABASE_USER"),
-  #password: System.get_env("DATABASE_PASSWORD"),
-  #database: System.get_env("DATABASE_NAME"),
-  #hostname: System.get_env("DATABASE_URL"),
-  pool_size: 15
+  url: System.get_env("DATABSE_URL"),
+  pool_size: 15,
+  ssl: true
