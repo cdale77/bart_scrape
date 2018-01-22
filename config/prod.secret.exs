@@ -17,5 +17,5 @@ config :bart_scrape, BartScrape.Repo,
   #username: System.get_env("DATABASE_USER"),
   #password: System.get_env("DATABASE_PASSWORD"),
   database: System.get_env("DATABASE_NAME"),
-  hostname: System.get_env("DATABASE_URL")
+  hostname: System.get_env("DATABASE_URL"),
   pool_size: 15
