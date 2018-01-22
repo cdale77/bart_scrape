@@ -13,8 +13,9 @@ use Mix.Config
 # which you typically run after static files are built.
 config :bart_scrape, BartScrape.Endpoint,
   http: [:inet6, port: {:system, "PORT"}],
-  url: [host: "example.com", port: 80],
-  cache_static_manifest: "priv/static/cache_manifest.json"
+  url: [host: "bart-scrape.herokuapp.com", port: 443],
+  cache_static_manifest: "priv/static/cache_manifest.json",
+  force_ssl: [rewrite_on: [:x_forwarded_pronto]]
 
 # Do not print debug messages in production
 config :logger, level: :info
