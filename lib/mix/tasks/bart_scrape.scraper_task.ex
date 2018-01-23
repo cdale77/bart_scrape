@@ -1,4 +1,4 @@
-defmodule Mix.Tasks.BartScrape.ScraperTask do
+defmodule Mix.Tasks.ScraperTask do
   use Mix.Task
 
   def run(_args) do

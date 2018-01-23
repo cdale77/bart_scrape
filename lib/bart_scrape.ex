@@ -14,7 +14,7 @@ defmodule BartScrape do
       # supervisor(BartScrape.Endpoint, []),
       # Start your own worker by calling: BartScrape.Worker.start_link(arg1, arg2, arg3)
       # worker(BartScrape.Worker, [arg1, arg2, arg3])
-      worker(BartScrape.Scraper, [])
+      #worker(BartScrape.Scraper, [])
     ]
 
     # See https://hexdocs.pm/elixir/Supervisor.html
