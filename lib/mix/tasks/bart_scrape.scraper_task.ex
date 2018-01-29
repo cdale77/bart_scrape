@@ -2,7 +2,7 @@ defmodule Mix.Tasks.ScraperTask do
   use Mix.Task
 
   def run(_args) do
-    {:ok, pid} = BartScrape.Scraper.start_link()
-    send(pid, :work)
+    HTTPoison.start()
+    BartScrape.Scraper.look_for_delays()
   end
 end
