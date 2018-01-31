@@ -15,14 +15,16 @@ defmodule BartScrape.Recorder do
   end
 
   defp record_delay(delay) do
-    Logger.info("delays found!")
+    Logger.info("delays found!" <> inspect(delay))
     attributes = build_attributes(delay)
-    Logger.info("building changeset: " <> inspect(delay))
+    Logger.info("building changeset: " <> inspect attributes)
     changeset = DelayRecord.changeset(%DelayRecord{}, attributes)
+    Logger.info("changeset: " <> inspect(changeset))
     Repo.insert(changeset)
   end
 
   defp build_attributes(delay) do
+    Logger.info("building attributes")
     %{
       bart_id: delay["@id"],
       delay_type: delay["type"],
