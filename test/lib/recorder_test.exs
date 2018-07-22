@@ -64,6 +64,7 @@ defmodule BartScrape.RecorderTest do
       assert record.station == "BART"
       expected = NaiveDateTime.to_iso8601(record.posted)
       assert expected == "2017-10-18T17:36:00.000000"
+      assert record.sms_text == "BART recovering: 10 min delay on SF line."
     end
   end
 end
