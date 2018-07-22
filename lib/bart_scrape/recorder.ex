@@ -28,7 +28,8 @@ defmodule BartScrape.Recorder do
       bart_id: delay["@id"],
       delay_type: delay["type"],
       station: delay["station"],
-      posted: parse_time(delay["posted"])
+      posted: parse_time(delay["posted"]),
+      sms_text: delay["sms_text"]["#cdata-section"]
     }
   end
 
