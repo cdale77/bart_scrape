@@ -38,7 +38,7 @@ defmodule BartScrape.Recorder do
     timestamp = Ecto.DateTime.utc |> Ecto.DateTime.to_iso8601
     previous_delay
     |> Ecto.Changeset.cast(%{ updated_at: timestamp }, [:updated_at])
-    |> Repo.insert!
+    |> Repo.update!
   end
 
   defp is_duplicate?(previous_delay, current_delay) do
