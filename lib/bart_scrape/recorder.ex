@@ -2,6 +2,8 @@ defmodule BartScrape.Recorder do
   use Timex
   require Logger
   alias BartScrape.{Repo, DelayRecord}
+  import Ecto.Query
+
   @format_string "%a %b %d %Y %I:%M %p %Z"
 
   def record_delays(delay_list) do
@@ -15,6 +17,43 @@ defmodule BartScrape.Recorder do
 
   defp record_delay(delay) do
     Logger.info("delays found!" <> inspect(delay))
+
+    record = Repo.one(from d in DelayRecord, order_by: [desc: d.id], limit: 1)
+
+    case record do
+      nil -> persist_record(delay)
+      previous_delay -> check_for_dupes(previous_delay, delay) 
+    end
+
+  end
+
+  defp check_for_dupes(previous_delay, current_delay) do
+    case is_duplicate?(previous_delay, current_delay) do
+      true -> persist_record(current_delay)
+      false -> increment_timestamp(previous_delay)
+    end
+  end
+
+  defp increment_timestamp(previous_delay) do
+    timestamp = Ecto.DateTime.utc |> Ecto.DateTime.to_iso8601
+    previous_delay
+    |> Ecto.Changeset.cast(%{ updated_at: timestamp }, [:updated_at])
+    |> Repo.insert!
+  end
+
+  defp is_duplicate?(previous_delay, current_delay) do
+    compare_times(previous_delay, current_delay) && compare_ids(previous_delay, current_delay)
+  end
+
+  defp compare_times(previous_delay, current_delay) do
+    previous_delay.posted == current_delay["posted"]
+  end
+
+  defp compare_ids(previous_delay, current_delay) do
+    previous_delay.bart_id == current_delay["@id"]
+  end
+
+  defp persist_record(delay) do
     attributes = build_attributes(delay)
     Logger.info("building changeset: " <> inspect attributes)
     changeset = DelayRecord.changeset(%DelayRecord{}, attributes)

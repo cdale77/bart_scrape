@@ -16,4 +16,5 @@ config :bart_scrape, BartScrape.Repo,
   password: "postgres",
   database: "bart_scrape_test",
   hostname: "localhost",
-  pool: Ecto.Adapters.SQL.Sandbox
+  pool: Ecto.Adapters.SQL.Sandbox,
+  ownership_timeout: 10 * 60 * 1000 # long timeout so pry sessions don't break

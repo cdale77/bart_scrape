@@ -40,7 +40,6 @@ defmodule BartScrape.RecorderTest do
       assert 1 == count
     end
 
-    @tag :skip
     test "should not persist duplicate delay records" do
       Recorder.record_delays(@delays)
       Recorder.record_delays(@delays)
@@ -48,12 +47,19 @@ defmodule BartScrape.RecorderTest do
       assert 1 == count
     end
 
-    @tag :skip
+    test "should persist delay records with the same time but not id" do
+      delays1 = @delays |> List.first |> Map.put("id", "123456")
+      Recorder.record_delays([delays1])
+      Recorder.record_delays(@delays)
+      count = Repo.one(from d in DelayRecord, select: count(d.id))
+      assert 1 == count
+    end
+
     test "should increment the updated_at timestamps for dupe" do
       Recorder.record_delays(@delays)
       Recorder.record_delays(@delays)
-      record = Repo.one(from d in DelayRecord)
-      assert record.update_at == record.created_at
+      record = Repo.one(from d in DelayRecord, limit: 1)
+      assert record.updated_at != record.inserted_at
     end
 
     test "should save the proper fields" do
