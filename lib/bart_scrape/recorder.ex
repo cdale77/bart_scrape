@@ -42,15 +42,7 @@ defmodule BartScrape.Recorder do
   end
 
   defp is_duplicate?(previous_delay, current_delay) do
-    compare_times(previous_delay, current_delay) && compare_ids(previous_delay, current_delay)
-  end
-
-  defp compare_times(previous_delay, current_delay) do
-    previous_delay.posted == current_delay["posted"]
-  end
-
-  defp compare_ids(previous_delay, current_delay) do
-    previous_delay.bart_id == current_delay["@id"]
+    previous_delay.id == current_delay["@id"]
   end
 
   defp persist_record(delay) do

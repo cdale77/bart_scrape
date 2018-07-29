@@ -55,13 +55,6 @@ defmodule BartScrape.RecorderTest do
       assert 1 == count
     end
 
-    test "should increment the updated_at timestamps for dupe" do
-      Recorder.record_delays(@delays)
-      Recorder.record_delays(@delays)
-      record = Repo.one(from d in DelayRecord, limit: 1)
-      assert record.updated_at != record.inserted_at
-    end
-
     test "should save the proper fields" do
       Recorder.record_delays(@delays)
       record = Repo.one(from d in DelayRecord, limit: 1)
