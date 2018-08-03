@@ -32,6 +32,7 @@ defmodule Mix.Tasks.CleanerTask do
   def compare_records(current_record, next_record) do
     case is_dupe?(current_record, next_record) do
       true -> update_timestamp(current_record)
+      false -> nil
     end
   end
 
