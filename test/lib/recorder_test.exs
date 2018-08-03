@@ -1,6 +1,7 @@
 defmodule BartScrape.RecorderTest do
   use BartScrape.ModelCase
   alias BartScrape.{Repo, Recorder, DelayRecord}
+
   @delays [
         %{
           "@id"              => "159007",
@@ -48,11 +49,11 @@ defmodule BartScrape.RecorderTest do
     end
 
     test "should persist delay records with the same time but not id" do
-      delays1 = @delays |> List.first |> Map.put("id", "123456")
-      Recorder.record_delays([delays1])
+      delay1 = @delays |> List.first |> Map.put("@id", "123456")
+      Recorder.record_delays([delay1])
       Recorder.record_delays(@delays)
       count = Repo.one(from d in DelayRecord, select: count(d.id))
-      assert 1 == count
+      assert 2 == count
     end
 
     test "should save the proper fields" do
