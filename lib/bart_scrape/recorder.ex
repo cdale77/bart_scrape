@@ -17,52 +17,36 @@ defmodule BartScrape.Recorder do
 
   defp record_delay(delay) do
     Logger.info("delays found!" <> inspect(delay))
-
-    record = Repo.one(from d in DelayRecord, order_by: [desc: d.id], limit: 1)
+    record = Repo.get_by(DelayRecord, bart_id: delay["@id"])
 
     case record do
       nil -> persist_record(delay)
-      previous_delay -> check_for_dupes(previous_delay, delay) 
-    end
-
-  end
-
-  defp check_for_dupes(previous_delay, current_delay) do
-    case is_duplicate?(previous_delay, current_delay) do
-      true -> increment_timestamp(previous_delay)
-      false -> persist_record(current_delay)
+      previous_delay -> increment_timestamp(previous_delay)
     end
   end
 
   defp increment_timestamp(previous_delay) do
+    Logger.info("Found existing delay id: " <> previous_delay["@id"])
     timestamp = Ecto.DateTime.utc |> Ecto.DateTime.to_iso8601
     previous_delay
     |> Ecto.Changeset.cast(%{ updated_at: timestamp }, [:updated_at])
     |> Repo.update!
   end
 
-  defp is_duplicate?(previous_delay, current_delay) do
-    previous_id = Integer.to_string(previous_delay.bart_id)
-    current_id = current_delay["@id"]
-    previous_id == current_id
-  end
-
   defp persist_record(delay) do
     attributes = build_attributes(delay)
-    Logger.info("building changeset: " <> inspect attributes)
     changeset = DelayRecord.changeset(%DelayRecord{}, attributes)
-    Logger.info("changeset: " <> inspect(changeset))
+    Logger.info("Saving new delay: " <> inspect(changeset))
     Repo.insert(changeset)
   end
 
   defp build_attributes(delay) do
-    Logger.info("building attributes")
     %{
-      bart_id: delay["@id"],
+      bart_id:    delay["@id"],
       delay_type: delay["type"],
-      station: delay["station"],
-      posted: parse_time(delay["posted"]),
-      sms_text: delay["sms_text"]["#cdata-section"]
+      station:    delay["station"],
+      posted:     parse_time(delay["posted"]),
+      sms_text:   delay["sms_text"]["#cdata-section"]
     }
   end
 
